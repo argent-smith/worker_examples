@@ -1,0 +1,5 @@
+(executable
+ (name        worker_lwt)
+ (public_name worker_lwt)
+ (libraries   lwt lwt.unix)
+ (preprocess (pps lwt_ppx)))
