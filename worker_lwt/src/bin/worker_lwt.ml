@@ -7,15 +7,13 @@ let reader n =
   let name = Printf.sprintf "files/%d.dat" n in
   let stream = Lwt_io.chars_of_file name in
   let rec read_stream chars i =
-    Lwt_stream.junk chars
+    Lwt_stream.get chars
     >>=
-      (fun () -> Lwt_io.printlf "%d\t=>\t#%d\t<=\t%s" n i name)
-    >>=
-      (fun () -> Lwt_unix.sleep 0.001)
-    >>=
-      (fun () -> read_stream chars (i + 1))
+      (function
+       | None -> Lwt_io.printlf "%s\t=> %d chars" name i
+       | _    -> read_stream chars (i + 1))
   in
-  read_stream stream 1
+  read_stream stream 0
 
 (* Lwt PPX syntax *)
 let reader' n =
@@ -33,6 +31,7 @@ let spawn_readers_for num =
   |> List.map reader
   |> Lwt.join
 
-
 let () =
+  Printf.printf "Starting %d workers\n" num_files;
+  flush stdout;
   Lwt_main.run @@ spawn_readers_for num_files
