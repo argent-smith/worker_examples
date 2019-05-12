@@ -17,11 +17,11 @@ let reader file_num =
   Unix.close descr;
   (name, nchars)
 
-let spawn_readers_for num =
+let run_readers_for num =
   Printf.printf "Starting %d workers\n" num;
   let ids = List.init num (fun i -> i + 1) in
   let results = Parmap.parmap ~ncores:num_files reader (Parmap.L ids) in
   List.iter (fun (name, n) -> Printf.printf "%s\t=> %d chars\n" name n) results
 
 let () =
-  spawn_readers_for num_files
+  run_readers_for num_files
