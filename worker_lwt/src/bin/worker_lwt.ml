@@ -1,14 +1,14 @@
 let num_files = 10
 
-let reader n =
-  let name = Printf.sprintf "files/%d.dat" n in
+let reader file_num =
+  let name = Printf.sprintf "files/%d.dat" file_num in
   let stream = Lwt_io.chars_of_file name in
-  let rec read_stream chars i =
-    match%lwt Lwt_stream.get chars with
-    | None -> Lwt.return (name, i)
-    | _    -> read_stream chars (i + 1)
+  let rec read_char stream n =
+    match%lwt Lwt_stream.get stream with
+    | None -> Lwt.return (name, n)
+    | _    -> read_char stream (n + 1)
   in
-  read_stream stream 0
+  read_char stream 0
 
 let collect_results =
   let rec append_to_ready ready pending =
