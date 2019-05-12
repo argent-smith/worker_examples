@@ -1,0 +1,4 @@
+(executable
+ (name        worker_parmap)
+ (public_name worker_parmap)
+ (libraries   parmap))

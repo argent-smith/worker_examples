@@ -1,0 +1,21 @@
+opam-version: "2.0"
+maintainer: "Pavel Argentov <argentoff@gmail.com>"
+authors: "Pavel Argentov <argentoff@gmail.com>"
+license: "Unlicense"
+dev-repo: "git+https://github.com/argent-smith/worker_examples/worker_lwt"
+homepage: "https://github.com/argent-smith/worker_examples"
+bug-reports: "https://github.com/argent-smith/worker_examples/issues"
+build: [
+  ["dune" "subst" ] {pinned}
+  ["dune" "build" "-p" name "-j" jobs]
+  ["dune" "build" "-p" name "-j" jobs "@doc"] {with-doc}
+  ["dune" "runtest" "-p" name "-j" jobs] {with-test}
+]
+depends: [
+  "ocaml" { build & >= "4.07.1" }
+  "dune" { build }
+  "parmap" { build }
+  "merlin" { post }
+  "utop" { post }
+]
+synopsis: "Reading files in parallel streams, parmap version"
