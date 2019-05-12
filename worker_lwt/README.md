@@ -8,7 +8,7 @@ $ brew install opam
 $ opam init
 ```
 
-Second, go to the example dir. Then, run the following commands%
+Second, go to the example dir. Then, run the following commands:
 
 ``` shell
 $ opam switch create . 4.07.1 --deps-only
